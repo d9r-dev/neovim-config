@@ -7,4 +7,3 @@ vim.g.mapleader = " "
 vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
-
