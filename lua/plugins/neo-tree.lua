@@ -15,7 +15,8 @@ return  {
           "Neotree action=focus source=filesystem position=left reveal_file="
             .. vim.fn.expand "%:p"
         )
-      end
+      end,
+      {desc = ":Neotree focus filesystem"}
     )
    vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left<CR>')
   end

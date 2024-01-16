@@ -15,6 +15,10 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      { 'j-hui/fidget.nvim', opts = {}},
+      'folke/neodev.nvim'
+    },
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -32,9 +36,9 @@ return {
       lspconfig.angularls.setup({
         capabilities = capabilities
       })
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
-      vim.keymap.set({ 'n' }, '<leader>ca', vim.lsp.buf.code_action, {})
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, {desc = "LSP: hover over code"})
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = "LSP: Go to definition"})
+      vim.keymap.set({ 'n' }, '<leader>ca', vim.lsp.buf.code_action, {desc = "LSP: Show code action"})
       vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
         vim.lsp.diagnostic.on_publish_diagnostics,
         {
