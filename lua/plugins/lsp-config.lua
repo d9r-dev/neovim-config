@@ -16,7 +16,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      { 'j-hui/fidget.nvim', opts = {}},
+      { 'j-hui/fidget.nvim', opts = {} },
       'folke/neodev.nvim'
     },
     config = function()
@@ -36,9 +36,27 @@ return {
       lspconfig.angularls.setup({
         capabilities = capabilities
       })
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, {desc = "LSP: hover over code"})
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = "LSP: Go to definition"})
-      vim.keymap.set({ 'n' }, '<leader>ca', vim.lsp.buf.code_action, {desc = "LSP: Show code action"})
+      lspconfig.tailwindcss.setup({
+        capabilities = capabilities
+      })
+
+      local cwd = vim.fn.getcwd()
+      local project_library_path = cwd .. "/node_modules"
+      local cmd = { "ngserver", "--stdio", "--tsProbeLocations", project_library_path, "--ngProbeLocations",
+        project_library_path }
+      local new_root_dir = require('lspconfig.util').root_pattern('angular.json')
+
+      lspconfig.angularls.setup {
+        capabilities = capabilities,
+        cmd = cmd,
+        root_dir = new_root_dir,
+        on_new_config = function(new_config)
+          new_config.cmd = cmd
+        end,
+      }
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "LSP: hover over code" })
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "LSP: Go to definition" })
+      vim.keymap.set({ 'n' }, '<leader>ca', vim.lsp.buf.code_action, { desc = "LSP: Show code action" })
       vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
         vim.lsp.diagnostic.on_publish_diagnostics,
         {

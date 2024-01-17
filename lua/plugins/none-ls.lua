@@ -42,7 +42,6 @@ return {
 		null_ls.setup({
 			sources = {
 				null_ls.builtins.diagnostics.eslint_d.with(opts.eslint_diagnostics),
-				null_ls.builtins.formatting.eslint_d.with(opts.eslint_formatting),
 				null_ls.builtins.formatting.prettier.with(opts.prettier_formatting),
 				null_ls.builtins.formatting.stylua.with(opts.stylua_formatting),
 				null_ls.builtins.code_actions.eslint_d.with(opts.eslint_diagnostics)
