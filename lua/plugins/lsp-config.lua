@@ -39,7 +39,9 @@ return {
       lspconfig.tailwindcss.setup({
         capabilities = capabilities
       })
-
+      lspconfig.rust_analyzer.setup({
+        capabilities = capabilities
+      })
       local cwd = vim.fn.getcwd()
       local project_library_path = cwd .. "/node_modules"
       local cmd = { "ngserver", "--stdio", "--tsProbeLocations", project_library_path, "--ngProbeLocations",
