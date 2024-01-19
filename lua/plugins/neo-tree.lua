@@ -1,4 +1,4 @@
-return  {
+return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
   dependencies = {
@@ -13,11 +13,11 @@ return  {
       function()
         vim.cmd(
           "Neotree action=focus source=filesystem position=left reveal_file="
-            .. vim.fn.expand "%:p"
+          .. vim.fn.expand "%:p"
         )
       end,
-      {desc = ":Neotree focus filesystem"}
+      { desc = ":Neotree focus filesystem" }
     )
-   vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left<CR>')
+    vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left<CR>')
   end
 }
