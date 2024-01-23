@@ -4,18 +4,18 @@ return {
     "rcarriga/nvim-dap-ui",
     "mxsdev/nvim-dap-vscode-js",
     {
-			"microsoft/vscode-js-debug",
-			version = "1.x",
-			build = "npm i && npm run compile vsDebugServerBundle && mv dist out"
-		}
+      "microsoft/vscode-js-debug",
+      version = "1.x",
+      build = "npm i && npm run compile vsDebugServerBundle && mv dist out"
+    }
   },
   config = function()
     local dap = require('dap')
     local dapui = require('dapui')
     local jsdebug = require('dap-vscode-js')
     jsdebug.setup({
-      adapters = { 'pwa-node' },
-      debugger_path = vim.fn.stdpath('data').."/lazy/vscode-js-debug",
+      adapters = { 'chrome', 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' },
+      debugger_path = vim.fn.stdpath('data') .. "/lazy/vscode-js-debug",
     })
 
     local js_based_languages = { "typescript", "javascript" }
@@ -33,7 +33,17 @@ return {
           request = "attach",
           name = "Attach",
           processId = require 'dap.utils'.pick_process,
-          cwd = "${workspaceFolder}",
+          name = "Attach debugger to existing `node --inspect` process",
+          -- for compiled languages like TypeScript or Svelte.js
+          sourceMaps = true,
+          -- resolve source maps in nested locations while ignoring node_modules
+          resolveSourceMapLocations = {
+            "${workspaceFolder}/**",
+            "!**/node_modules/**" },
+          -- path to src in vite based projects (and most other projects as well)
+          cwd = "${workspaceFolder}/src",
+          -- we don't want to debug code inside node_modules, so skip it!
+          skipFiles = { "${workspaceFolder}/node_modules/**/*.js" },
         },
         {
           type = "pwa-chrome",
