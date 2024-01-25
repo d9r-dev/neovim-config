@@ -11,5 +11,6 @@ return {
       autotag = { enable = true }
     })
     require 'nvim-treesitter.install'.compilers = { "clang" }
+    vim.treesitter.language.register('prisma', { 'prisma'})
   end
 }

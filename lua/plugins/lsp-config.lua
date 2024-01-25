@@ -27,6 +27,9 @@ return {
       lspconfig.lua_ls.setup({
         capabilities = capabilities
       })
+      lspconfig.prismals.setup({
+        capabilities = capabilities
+      })
       lspconfig.tsserver.setup({
         capabilities = capabilities
       })
@@ -43,6 +46,9 @@ return {
         capabilities = capabilities
       })
       lspconfig.cssls.setup({
+        capabilities = capabilities
+      })
+      lspconfig.astro.setup({
         capabilities = capabilities
       })
       local cwd = vim.fn.getcwd()
