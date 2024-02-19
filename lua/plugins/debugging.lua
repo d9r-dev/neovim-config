@@ -18,7 +18,7 @@ return {
       debugger_path = vim.fn.stdpath('data') .. "/lazy/vscode-js-debug",
     })
 
-    local js_based_languages = { "typescript", "javascript" }
+    local js_based_languages = { "typescript", "typescriptreact", "javascript" }
     for _, language in ipairs(js_based_languages) do
       require("dap").configurations[language] = {
         {
@@ -31,19 +31,16 @@ return {
         {
           type = "pwa-node",
           request = "attach",
-          name = "Attach",
           processId = require 'dap.utils'.pick_process,
           name = "Attach debugger to existing `node --inspect` process",
+          port = function()
+            return vim.fn.input("Select port: ", 9229)
+          end,
+          cwd = vim.fn.getcwd(),
           -- for compiled languages like TypeScript or Svelte.js
-          sourceMaps = true,
-          -- resolve source maps in nested locations while ignoring node_modules
-          resolveSourceMapLocations = {
-            "${workspaceFolder}/**",
-            "!**/node_modules/**" },
           -- path to src in vite based projects (and most other projects as well)
-          cwd = "${workspaceFolder}/src",
           -- we don't want to debug code inside node_modules, so skip it!
-          skipFiles = { "${workspaceFolder}/node_modules/**/*.js" },
+          skipFiles = { "<node_internals>/**" }
         },
         {
           type = "pwa-chrome",
